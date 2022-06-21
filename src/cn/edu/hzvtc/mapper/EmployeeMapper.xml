@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hzvtc.dao.EmployeeMapper">
+  <resultMap id="withDeptResultMap" type="cn.edu.hzvtc.bean.Employee">
+    <id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="emp_gender" jdbcType="CHAR" property="empGender" />
+    <result column="emp_email" jdbcType="VARCHAR" property="empEmail" />
+    <association property="department" javaType="cn.edu.hzvtc.bean.Department">
+      <id column="dept_id" jdbcType="INTEGER" property="deptId"/>
+      <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+    </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_emp
+    where emp_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteBatch">
+    delete from tbl_emp
+    <foreach collection="ids" item="item_id" separator=" ,"
+             open="where emp_id in (" close=")">
+      #{item_id}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.hzvtc.bean.Employee">
+
+    insert into tbl_emp ( emp_name, emp_gender,
+      emp_email, d_id)
+    values (#{empName,jdbcType=VARCHAR}, #{empGender,jdbcType=CHAR},
+      #{empEmail,jdbcType=VARCHAR}, #{dId,jdbcType=INTEGER})
+  </insert>
+
+  <select id="selectByPrimaryKey"  parameterType="java.lang.Integer" resultMap="withDeptResultMap">
+
+    select emp_id, emp_name, emp_gender, emp_email, dept_id,dept_name
+    from tbl_emp e
+    left join tbl_dept d on e.d_id= d.dept_id
+    where e.emp_id = #{empId,jdbcType=INTEGER}
+    order by e.emp_id desc
+
+  </select>
+  <select id="selectAll" resultMap="withDeptResultMap" parameterType="string">
+
+    select emp_id, emp_name, emp_gender, emp_email, dept_id,dept_name
+    from tbl_emp e
+    left join tbl_dept d on e.d_id= d.dept_id
+    <if test="value != null and value.length>0">
+      where emp_id =#{value} or emp_name =#{value}
+    </if>
+    order by e.emp_id desc
+  </select>
+  <select id="selectByCondition" resultType="cn.edu.hzvtc.bean.Employee">
+    select e.emp_id,e.emp_name,e.emp_gender,e.emp_email, e.d_id,d.dept_id,d.dept_name from tbl_emp e
+    left join tbl_dept d on e.d_id = d.dept_id
+    <where>
+    <if test="empId!=null">
+      e.emp_id=#{empId}</if>
+    <if test="empName!=null and empName.trim() != &quot;&quot;">
+      and emp_name=#{empName}
+      </if>
+      <if test="empGender=='F' or empGender== 'M' ">
+        and e.emp_gender=#{empGender}
+      </if>
+      <if test="empEmail!=null and empEmail.trim() != &quot;&quot;">
+      and e.emp_email=#{empEmail}
+    </if>
+    <if test="department!=null">
+        <if test="department.deptId!=nul1">
+            and d.dept_id=#{department.deptId}
+        </if>
+        <if test="department.deptName!=null and department.deptName.trim() !=&quot;&quot;">
+            and d.dept_name=#{department.deptName}
+        </if>
+    </if>
+    </where>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.bean.Employee">
+  update tbl_emp
+  <set>
+    <if test="empName != null">
+      emp_name = #{empName ,jdbcType=VARCHAR},</if>
+      <if test="empGender != null">
+      emp_gender = #{empGender,jdbcType=CHAR},</if>
+      <if test="empEmail != null">
+      emp_email = #{empEmail,jdbcType=VARCHAR},</if>
+    <if test="dId != null">
+      d_id = #{dId,jdbcType=INTEGER}
+    </if>
+  </set>
+  where emp_id = #{empId,jdbcType=INTEGER}
+  </update>
+</mapper>
