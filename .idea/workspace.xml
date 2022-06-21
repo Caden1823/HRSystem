@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f11c1d0-2174-47e0-85fb-51637cbddaf6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/Test.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +65,16 @@
       <updated>1655810073413</updated>
       <workItem from="1655810074562" duration="397000" />
       <workItem from="1655810481221" duration="104000" />
+      <workItem from="1655810594776" duration="259000" />
     </task>
+    <task id="LOCAL-00001" summary="完成查询功能">
+      <created>1655810742170</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1655810742170</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -85,6 +94,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="完成查询功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成查询功能" />
   </component>
 </project>
